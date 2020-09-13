@@ -3,11 +3,18 @@ import "./App.css";
 import Geolocation from './Geolocation/Geolocation';
 import Zomato from "./Zomato/Zomato";
 
+<<<<<<< HEAD
 export interface GeoState {
   longitude: String,
   latitude: String,
   results: {},
   zomatoURL: String
+=======
+
+
+function App() {
+  return <div className="App"></div>;
+>>>>>>> 32db0eaa168ab29472b7ee69320be4859d25327b
 }
 export interface GeoProps {
   longitude: String,
