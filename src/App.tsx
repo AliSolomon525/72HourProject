@@ -1,12 +1,19 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useState } from "react";
+import Styling from "./components/Styling";
 import "./App.css";
+import Geolocation from "./Geolocation/Geolocation";
+import Zomato from "./Zomato/Zomato";
 
 function App() {
-  return <div className="App">
-    <h1>lauren testing</h1>
-    <h2>Hello!</h2>
-  </div>;
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+
+  return (
+    <div className="App">
+      <Zomato latitude={latitude} longitude={longitude} />
+      <Geolocation latitude={setLatitude} longitude={setLongitude} />
+    </div>
+  );
 }
 
 export default App;
