@@ -1,22 +1,33 @@
-import React from 'react'
-import { GeoState, GeoProps } from '../App';
+import React from 'react';
+import { ZomatoInterface } from './ZomatoInterface';
 
-class Zomato extends React.Component<GeoProps, GeoState> {
-    constructor(props: GeoProps) {
+export interface ZomatoProps {
+    latitude: number;
+    longitude: number;
+}
+export interface ZomatoState {
+    ZomatoResults: ZomatoInterface;
+}
+
+class Zomato extends React.Component<ZomatoProps,ZomatoState> {
+    constructor(props: ZomatoProps) {
         super(props);
+        this.state = {
+            ZomatoResults: {}
+        }
     }
     componentDidMount() {
-        fetch(`https://developers.zomato.com/api/v2.1/geocode?lat=${this.state.latitude}&lon=${this.state.longitude}`, {
+        fetch(`https://developers.zomato.com/api/v2.1/geocode?lat=${this.props.latitude}&lon=${this.props.longitude}`, {
             method: 'GET',
             headers: {
-                'Authorization': 'f0e967e1b7213e6511c3900caf3f8aac',
+                'user-key': 'f0e967e1b7213e6511c3900caf3f8aac',
                 'Content-Type': 'application/json'
             }
         })
         .then(res => res.json())
-        .then((json: any) => {
+        .then((json: ZomatoInterface) => {
             console.log(json)
-            this.setState({results: json.results})
+            this.setState({ZomatoResults: json})
         })
     }
     render() { 

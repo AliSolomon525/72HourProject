@@ -106,8 +106,8 @@
     }
 
     export interface ZomatoInterface {
-        location: Location;
-        popularity: Popularity;
-        link: String;
-        nearby_restaurants: NearbyRestaurant[];
+        location?: Location;
+        popularity?: Popularity;
+        link?: String;
+        nearby_restaurants?: NearbyRestaurant[];
     }
