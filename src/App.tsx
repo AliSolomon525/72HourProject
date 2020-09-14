@@ -3,7 +3,6 @@ import Styling from "./components/Styling";
 import "./App.css";
 import Geolocation from './Geolocation/Geolocation';
 import Zomato from "./Zomato/Zomato";
-
  
 function App() { 
   const [latitude, setLatitude] = useState(0);

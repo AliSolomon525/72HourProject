@@ -20,7 +20,7 @@ class Weather extends React.Component<WeatherProps, WeatherState> {
             console.log("Latitude:", position.coords.latitude);
             console.log("Longitude:", position.coords.longitude);
           });
-        fetch(this.props.coord)
+        fetch("")
           .then((res) => res.json())
           .then((json: WeatherResponse) => {
             //interface only lets it do the info or results from fetch
@@ -30,7 +30,7 @@ class Weather extends React.Component<WeatherProps, WeatherState> {
       }
 
     render() {
-        return (  );
+        return ( <div></div> );
     }
 }
 
