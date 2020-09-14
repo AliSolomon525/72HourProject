@@ -11,7 +11,7 @@ function App() {
     return ( 
     <div className="App">
     <Zomato latitude={latitude} longitude={longitude}/>
-    <Geolocation latitude={latitude} longitude={longitude}/>
+    <Geolocation latitude={setLatitude} longitude={setLongitude}/>
     </div> 
     );
     };
