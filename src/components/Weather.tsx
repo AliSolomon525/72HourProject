@@ -1,5 +1,6 @@
 import { ToggleButton } from "@material-ui/lab";
 import React from "react";
+import { addEmitHelper } from "typescript";
 import { WeatherResponse } from "./WeatherInterface";
 
 export interface WeatherProps {
@@ -31,11 +32,11 @@ class Weather extends React.Component<WeatherProps, WeatherState> {
   };
 
   convertToFahrenheit = (temp: number = 0) => {
-    this.setState({ temp: ((temp - 273.15) * 9) / 5 + 32 });
+    this.setState({ temp: Math.round((temp - 273.15) * 9) / 5 + 32 });
   };
 
   convertToCelsius = (temp: number = 0) => {
-    this.setState({ temp: temp - 273.15 });
+    this.setState({ temp: Math.round(temp - 273.15) });
   };
 
   componentDidUpdate(prevProps: WeatherProps) {
@@ -54,14 +55,15 @@ class Weather extends React.Component<WeatherProps, WeatherState> {
   render() {
     return (
       <div>
-        <ToggleButton onClick={this.toggle} value="bold" aria-label="bold">
-          Click Me
-        </ToggleButton>
         {this.state.weatherInformation.main !== undefined ? (
           this.state.temp
         ) : (
           <></>
         )}
+        <br />
+        <ToggleButton onClick={this.toggle} value="bold" aria-label="bold">
+          Toggle Between °C and °F!
+        </ToggleButton>
       </div>
     );
   }
