@@ -1,37 +1,72 @@
+import { ToggleButton } from "@material-ui/lab";
 import React from "react";
+import { addEmitHelper } from "typescript";
 import { WeatherResponse } from "./WeatherInterface";
 
 export interface WeatherProps {
-    coord: {lat: number; lon: number};
+  latitude: number;
+  longitude: number;
 }
 
 export interface WeatherState {
-    weatherInformation: any;
+  weatherInformation: WeatherResponse;
+  Fahrenheit: boolean;
+  temp: number | undefined;
 }
 
 class Weather extends React.Component<WeatherProps, WeatherState> {
-    constructor(props: WeatherProps) {
-        super(props);
-        this.state = { weatherInformation: [] };
-    }
+  constructor(props: WeatherProps) {
+    super(props);
+    this.state = { weatherInformation: {}, Fahrenheit: true, temp: 0 };
+  }
 
-    componentDidMount() {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            console.log("Latitude:", position.coords.latitude);
-            console.log("Longitude:", position.coords.longitude);
-          });
-        fetch(this.props.coord)
-          .then((res) => res.json())
-          .then((json: WeatherResponse) => {
-            //interface only lets it do the info or results from fetch
-            console.log(json);
-            this.setState({ weatherInformation: json.coord });
-          });
-      }
-
-    render() {
-        return (  );
+  toggle = () => {
+    //this is a method
+    if (this.state.Fahrenheit === true) {
+      this.setState({ Fahrenheit: false });
+      this.convertToCelsius(this.state.weatherInformation.main?.temp);
+    } else {
+      this.setState({ Fahrenheit: true });
+      this.convertToFahrenheit(this.state.weatherInformation.main?.temp);
     }
+  };
+
+  convertToFahrenheit = (temp: number = 0) => {
+    this.setState({ temp: Math.round((temp - 273.15) * 9) / 5 + 32 });
+  };
+
+  convertToCelsius = (temp: number = 0) => {
+    this.setState({ temp: Math.round(temp - 273.15) });
+  };
+
+  componentDidUpdate(prevProps: WeatherProps) {
+    if (this.props.latitude !== prevProps.latitude) {
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${this.props.latitude}&lon=${this.props.longitude}&appid=07372456674d98c91c5fa753abad7e94`
+      )
+        .then((res) => res.json())
+        .then((json: WeatherResponse) => {
+          //interface only lets it do the info or results from fetch
+          console.log(json);
+          this.setState({ weatherInformation: json, temp: json.main?.temp });
+        });
+    }
+  }
+  render() {
+    return (
+      <div>
+        {this.state.weatherInformation.main !== undefined ? (
+          this.state.temp
+        ) : (
+          <></>
+        )}
+        <br />
+        <ToggleButton onClick={this.toggle} value="bold" aria-label="bold">
+          Toggle Between °C and °F!
+        </ToggleButton>
+      </div>
+    );
+  }
 }
 
 export default Weather;
