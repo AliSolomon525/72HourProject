@@ -30,7 +30,10 @@ class NASA extends React.Component<NASAProps, NASAState> {
     console.log("testing");
     return (
       <div>
-        <img style={{ maxWidth: "200px" }} src={this.state.NASAInfo} />
+        <img
+          style={{ maxWidth: "200px", maxHeight: "200px" }}
+          src={this.state.NASAInfo}
+        />
       </div>
     );
   }
